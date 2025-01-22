@@ -9,7 +9,7 @@ const app = express();
 
 const PORT = process.env.PORT || 5001;
 const MONGODB_URI = process.env.MONGODB_URI;
-const FRONTEND_URL = process.env.FRONTEND_URL || '*';  // 在获取实际域名前临时允许所有来源
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://willwillam.github.io';
 
 // CORS 配置
 app.use(cors({
