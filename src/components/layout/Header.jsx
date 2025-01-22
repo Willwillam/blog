@@ -105,7 +105,7 @@ const Header = () => {
       <Container maxWidth="lg">
         <Toolbar sx={{ py: 1 }}>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-            <Logo to="/">
+            <Logo to={process.env.PUBLIC_URL + "/"}>
               <LogoIcon>B</LogoIcon>
               <Typography variant="h6" sx={{ fontWeight: 600, ml: 1 }}>
                 博客天地
@@ -114,9 +114,9 @@ const Header = () => {
           </Box>
 
           <Navigation>
-            <NavLink to="/">首页</NavLink>
-            <NavLink to="/articles">文章</NavLink>
-            <NavLink to="/about">关于</NavLink>
+            <NavLink to={process.env.PUBLIC_URL + "/"}>首页</NavLink>
+            <NavLink to={process.env.PUBLIC_URL + "/articles"}>文章</NavLink>
+            <NavLink to={process.env.PUBLIC_URL + "/about"}>关于</NavLink>
           </Navigation>
 
           <UserSection>
