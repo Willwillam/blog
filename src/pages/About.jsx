@@ -1,48 +1,102 @@
 import React from 'react';
-import { Container, Typography, Paper, Box, Chip, Avatar } from '@mui/material';
+import { Container, Typography, Box, Paper, Link, Chip, Grid } from '@mui/material';
+import { Email, GitHub } from '@mui/icons-material';
 import styled from 'styled-components';
 
 const StyledPaper = styled(Paper)`
   padding: 32px;
-  margin-top: 32px;
+  margin: 24px 0;
+`;
+
+const ContactItem = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+`;
+
+const SkillsContainer = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
 `;
 
 const About = () => {
-  return (
-    <Container>
-      <StyledPaper elevation={3}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-          <Avatar
-            src="https://source.unsplash.com/random/150x150"
-            sx={{ width: 150, height: 150, mb: 2 }}
-          />
-          <Typography variant="h4" gutterBottom>
-            关于我
-          </Typography>
-        </Box>
+  const skills = {
+    frontend: ['React', 'Vue', 'TypeScript', 'Next.js', 'Webpack'],
+    backend: ['Node.js', 'Express', 'MongoDB', 'MySQL', 'Redis'],
+    tools: ['Git', 'Docker', 'Linux', 'VS Code', 'Postman']
+  };
 
+  return (
+    <Container maxWidth="lg">
+      <StyledPaper elevation={3}>
+        <Typography variant="h4" gutterBottom>
+          关于我
+        </Typography>
+        
         <Typography variant="body1" paragraph>
-          你好！我是一名全栈开发者，热衷于探索新技术和分享技术见解。
-          在这个博客中，我会分享我的技术心得、学习经验和一些有趣的项目。
+          你好！我是一名全栈开发者，热衷于探索和学习新技术，喜欢分享技术见解和开发经验。
         </Typography>
 
-        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
+        <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
           技术栈
         </Typography>
-        <Box display="flex" flexWrap="wrap" gap={1} mb={4}>
-          {['React', 'Node.js', 'TypeScript', 'Python', 'Docker', 'MongoDB', 'AWS'].map(tech => (
-            <Chip key={tech} label={tech} />
-          ))}
-        </Box>
+        
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>
+              前端开发
+            </Typography>
+            <SkillsContainer>
+              {skills.frontend.map(skill => (
+                <Chip key={skill} label={skill} />
+              ))}
+            </SkillsContainer>
+          </Grid>
+          
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>
+              后端开发
+            </Typography>
+            <SkillsContainer>
+              {skills.backend.map(skill => (
+                <Chip key={skill} label={skill} />
+              ))}
+            </SkillsContainer>
+          </Grid>
+          
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>
+              开发工具
+            </Typography>
+            <SkillsContainer>
+              {skills.tools.map(skill => (
+                <Chip key={skill} label={skill} />
+              ))}
+            </SkillsContainer>
+          </Grid>
+        </Grid>
 
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
           联系方式
         </Typography>
-        <Typography variant="body1">
-          Email: example@example.com<br />
-          GitHub: github.com/example<br />
-          LinkedIn: linkedin.com/in/example
-        </Typography>
+        
+        <Box sx={{ mt: 2 }}>
+          <ContactItem>
+            <Email color="primary" />
+            <Link href="mailto:475294039@qq.com" underline="hover">
+              475294039@qq.com
+            </Link>
+          </ContactItem>
+          <ContactItem>
+            <GitHub color="primary" />
+            <Link href="https://github.com/Willwillam" target="_blank" rel="noopener noreferrer" underline="hover">
+              @Willwillam
+            </Link>
+          </ContactItem>
+        </Box>
       </StyledPaper>
     </Container>
   );

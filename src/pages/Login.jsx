@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Paper, TextField, Button, Typography, Box } from '@mui/material';
+import { Container, Paper, TextField, Button, Typography, Box, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUser } from '../context/UserContext';
@@ -30,6 +30,7 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,18 +40,18 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.username === MOCK_USER.username && 
-        formData.password === MOCK_USER.password) {
-      // 登录成功
-      login({
-        username: formData.username,
-        // 实际项目中不要存储密码
-      });
+    setError('');
+    setLoading(true);
+    
+    try {
+      await login(formData);
       navigate('/');
-    } else {
-      setError('用户名或密码错误');
+    } catch (err) {
+      setError(err.message || '登录失败');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +61,11 @@ const Login = () => {
         <Typography variant="h4" gutterBottom align="center">
           登录
         </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <TextField
             label="用户名"
@@ -68,6 +74,7 @@ const Login = () => {
             onChange={handleChange}
             fullWidth
             required
+            disabled={loading}
           />
           <TextField
             label="密码"
@@ -77,20 +84,17 @@ const Login = () => {
             onChange={handleChange}
             fullWidth
             required
+            disabled={loading}
           />
-          {error && (
-            <Typography color="error" align="center">
-              {error}
-            </Typography>
-          )}
           <Button
             type="submit"
             variant="contained"
             color="primary"
             size="large"
             fullWidth
+            disabled={loading}
           >
-            登录
+            {loading ? '登录中...' : '登录'}
           </Button>
         </Form>
         <Box mt={2}>

@@ -9,6 +9,9 @@ import Home from './pages/Home';
 import Articles from './pages/Articles';
 import About from './pages/About';
 import Login from './pages/Login';
+import EditPost from './pages/EditPost';
+import PostDetail from './pages/PostDetail';
+import { Box } from '@mui/material';
 
 // 创建主题
 const theme = createTheme({
@@ -43,12 +46,17 @@ function App() {
       <UserProvider>
         <Router>
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/articles" element={<Articles />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <Box sx={{ pt: '60px' }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/posts/:id" element={<PostDetail />} />
+              <Route path="/posts/new" element={<EditPost />} />
+              <Route path="/posts/edit/:id" element={<EditPost />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </Box>
         </Router>
       </UserProvider>
     </ThemeProvider>

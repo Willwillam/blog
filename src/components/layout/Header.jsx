@@ -116,7 +116,6 @@ const Header = () => {
           <Navigation>
             <NavLink to="/">首页</NavLink>
             <NavLink to="/articles">文章</NavLink>
-            <NavLink to="/categories">分类</NavLink>
             <NavLink to="/about">关于</NavLink>
           </Navigation>
 

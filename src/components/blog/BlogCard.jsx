@@ -2,15 +2,28 @@ import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Box, Chip } from '@mui/material';
 import { AccessTime, Bookmark, Comment } from '@mui/icons-material';
 import styled from 'styled-components';
+import { getDefaultCoverImage } from '../../config/images';
 
 const StyledCard = styled(Card)`
-  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   transition: transform 0.2s;
+  margin-bottom: 20px;
   &:hover {
     transform: translateY(-5px);
   }
+`;
+
+const CardImageContainer = styled.div`
+  flex: 0 0 200px;
+  @media (max-width: 600px) {
+    flex: 0 0 120px;
+  }
+`;
+
+const CardContentContainer = styled(CardContent)`
+  flex: 1;
+  padding: 16px !important;
 `;
 
 const TagContainer = styled(Box)`
@@ -27,16 +40,18 @@ const StatsContainer = styled(Box)`
   margin-top: 10px;
 `;
 
-export const BlogCard = ({ post }) => {
+export const BlogCard = ({ post, onClick }) => {
   return (
-    <StyledCard>
-      <CardMedia
-        component="img"
-        height="200"
-        image={post.image}
-        alt={post.title}
-      />
-      <CardContent>
+    <StyledCard onClick={onClick} sx={{ cursor: 'pointer' }}>
+      <CardImageContainer>
+        <CardMedia
+          component="img"
+          sx={{ height: '100%', objectFit: 'cover' }}
+          image={post.coverImage || getDefaultCoverImage(post.category)}
+          alt={post.title}
+        />
+      </CardImageContainer>
+      <CardContentContainer>
         <Typography variant="h6" gutterBottom>
           {post.title}
         </Typography>
@@ -44,25 +59,31 @@ export const BlogCard = ({ post }) => {
           {post.summary}
         </Typography>
         <TagContainer>
-          {post.tags.map(tag => (
+          {post.tags?.map(tag => (
             <Chip key={tag} label={tag} size="small" />
           ))}
         </TagContainer>
         <StatsContainer>
           <Box display="flex" alignItems="center" gap={1}>
             <AccessTime fontSize="small" />
-            <Typography variant="body2">{post.date}</Typography>
+            <Typography variant="body2">
+              {new Date(post.createdAt).toLocaleDateString()}
+            </Typography>
           </Box>
           <Box display="flex" alignItems="center" gap={1}>
             <Comment fontSize="small" />
-            <Typography variant="body2">{post.comments} 评论</Typography>
+            <Typography variant="body2">
+              {post.comments?.length || 0} 评论
+            </Typography>
           </Box>
           <Box display="flex" alignItems="center" gap={1}>
             <Bookmark fontSize="small" />
-            <Typography variant="body2">{post.views} 阅读</Typography>
+            <Typography variant="body2">
+              {post.views || 0} 阅读
+            </Typography>
           </Box>
         </StatsContainer>
-      </CardContent>
+      </CardContentContainer>
     </StyledCard>
   );
 }; 
